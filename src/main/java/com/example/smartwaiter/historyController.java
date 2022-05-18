@@ -81,8 +81,6 @@ public class historyController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        //11;Thit ga;soup;150.0;150.0;50.0;D:\DuyStudy\FILE_Ky2_LapTrinh\SmarterWaiter\src\main\resources\com\example\smarterwaiter\img\Chef.png;dla dla;
-        //int id, String nameDish, String type, double totalCalo, double totalTien, double time, String linkImgString, String description
         List<Dish> list=new ArrayList<Dish>();
         List<Order> listO=new ArrayList<>();
         Dish a =new Dish(11,"Thit ga","soup",150.0,150.0,150.0,"D:\\DuyStudy\\FILE_Ky2_LapTrinh\\SmartWaiter\\src\\main\\resources\\com\\example\\smartwaiter\\img\\Chef.png","alo alo");
@@ -94,9 +92,9 @@ public class historyController implements Initializable {
         Order myOrder1 = new Order(list,1);
         Order myOrder2 = new Order(list,1);
         Order myOrder3 = new Order(list,1);
-        listO.add(myOrder1);/*
+        listO.add(myOrder1);
         listO.add(myOrder2);
-        listO.add(myOrder3);*/
+        /*listO.add(myOrder3);*/
         Calendar cale = Calendar.getInstance();
         Date date = cale.getTime();
         mealList= FXCollections.observableArrayList(
@@ -108,7 +106,7 @@ public class historyController implements Initializable {
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
         caloColumn.setCellValueFactory(new PropertyValueFactory<>("calo"));
         priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
-        actionColumn.setCellFactory(param -> new TableCell<Meal, Void>() {
+        actionColumn.setCellFactory(param -> new TableCell<>() {
             private final Button orderButton = new Button("detail");
             private final HBox pane = new HBox(orderButton);
 
@@ -175,7 +173,6 @@ public class historyController implements Initializable {
             resultBMR=resultBMR*2;
         }
         adviceLabel.setText("You need: "+Math.ceil(resultBMR* 100) / 100+" calories");
-
     }
     public double caloLastMonth(){
         return 0;

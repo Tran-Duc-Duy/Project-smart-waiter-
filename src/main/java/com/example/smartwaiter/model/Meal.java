@@ -58,7 +58,7 @@ public class Meal {
     public String toString() {
         String str="";
         for(Order order : listOrder) {
-            str+= order.toString()+"\n";
+            str+= order.toString()+" \n";
         }
         return str;
     }
