@@ -45,30 +45,15 @@ public class historyController implements Initializable {
     @FXML private ChoiceBox<String> typeChoice;
     @FXML private Label invalidLabel;
     @FXML private Label adviceLabel;
+
+    @FXML private TextField caloDfField;
     @FXML private Label caloLastMonthLabel;
     @FXML private Label caloThisMonthLabel;
-    @FXML private Label caloTodayLabel;
-    @FXML private Label caloMoreLabel;
-    public double getDefaultCalo() {
-        return defaultCalo;
-    }
-
-    public void setDefaultCalo(double defaultCalo) {
-        this.defaultCalo = defaultCalo;
-    }
-
-    private double defaultCalo=0;
+    static public double defaultCalo=0;
     int checkGender=1;
-    //Daily activities.
-    //Do nothing, go nowhere.
-    //Office work - study, not sports.
-    //Office work - study, sport medium.
-    //Moderate physical activity, not sports
-    //Moderate physical activity, moderate sport.
-    //Moderate physical activity, heavy sports.
-    //Heavy work - heavy sports.
-    //Super heavy work.
-    private String[] activities ={
+    Calendar cale = Calendar.getInstance();
+    private Date date = cale.getTime();
+    private String[] activities = {
             "Do nothing, go nowhere",
             "Office work - study, not sports",
             "Office work - study, sport medium",
@@ -81,35 +66,15 @@ public class historyController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        /*List<Dish> list=new ArrayList<Dish>();
-        List<Order> listO=new ArrayList<>();
-        Dish a =new Dish(11,"Thit ga","soup",150.0,150.0,150.0,"D:\\DuyStudy\\FILE_Ky2_LapTrinh\\SmartWaiter\\src\\main\\resources\\com\\example\\smartwaiter\\img\\Chef.png","alo alo");
-        Dish b =new Dish(11,"Thit ga","soup",150.0,150.0,150.0,"D:\\DuyStudy\\FILE_Ky2_LapTrinh\\SmartWaiter\\src\\main\\resources\\com\\example\\smartwaiter\\img\\Chef.png","alo alo");
-        Dish c =new Dish(11,"Thit ga","soup",150.0,150.0,150.0,"D:\\DuyStudy\\FILE_Ky2_LapTrinh\\SmartWaiter\\src\\main\\resources\\com\\example\\smartwaiter\\img\\Chef.png","alo alo");
-        list.add(a);
-        list.add(b);
-        list.add(c);
-        Order myOrder1 = new Order(list,1);
-        Order myOrder2 = new Order(list,1);
-        Order myOrder3 = new Order(list,1);
-        listO.add(myOrder1);
-        listO.add(myOrder2);
-        *//*listO.add(myOrder3);*//*
-        Calendar cale = Calendar.getInstance();
-        Date date = cale.getTime();
-        mealList= FXCollections.observableArrayList(
-                new Meal(listO,date,100,200),
-                new Meal(listO,date,150,500),
-                new Meal(listO,date,200,100)
-        );*/
         mealList=IO.readFileMeal();
-
+        caloLastMonthLabel.setText(String.valueOf(caloLastMonth()));
+        caloThisMonthLabel.setText(String.valueOf(caloThisMonth()));
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
         caloColumn.setCellValueFactory(new PropertyValueFactory<>("calo"));
         priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
         actionColumn.setCellFactory(param -> new TableCell<>() {
-            private final Button orderButton = new Button("detail");
+            private final Button orderButton = new Button("delete");
             private final HBox pane = new HBox(orderButton);
 
             {
@@ -117,6 +82,9 @@ public class historyController implements Initializable {
                     /*Meal getPatient = getTableView().getItems().get(getIndex());
 
                     .add(getPatient);*/
+                    Meal getPatient = getTableView().getItems().get(getIndex());
+                    mealList.remove(getPatient);
+                    IO.writeFileMeal(mealList);
                 });
 
             }
@@ -130,6 +98,7 @@ public class historyController implements Initializable {
         typeChoice.getItems().addAll(activities);
         typeChoice.setValue("Do nothing, go nowhere");
         table.setItems(mealList);
+
     }
     public void calculateBMR(){
         String invalid="";
@@ -156,7 +125,7 @@ public class historyController implements Initializable {
         }else {
             resultBMR = 665+(9.56*W)+(1.85*H)+(4.68*A);
         }
-        System.out.println(typeChoice.getValue());
+
         if(typeChoice.getValue().equals("Do nothing, go nowhere")){
             resultBMR=resultBMR*1.2;
         }else if(typeChoice.getValue().equals("Office work - study, not sports")){
@@ -177,14 +146,31 @@ public class historyController implements Initializable {
         adviceLabel.setText("You need: "+Math.ceil(resultBMR* 100) / 100+" calories");
     }
     public double caloLastMonth(){
-        return 0;
+        int a =date.getMonth()-1;
+        double rs=0.0;
+        for(Meal me:mealList){
+            if(me.getD().getMonth()==a){
+                rs+=me.getCalo();
+            }
+        }
+        return rs;
     }
     public double caloThisMonth(){
-        return 0;
+        int a =date.getMonth();
+        double rs=0.0;
+        for(Meal me:mealList){
+            if(me.getD().getMonth()==a){
+                rs+=me.getCalo();
+            }
+        }
+        return rs;
     }
-    public double caloToday(){
-        return 0;
+    public void setDfCalo(){
+        defaultCalo=Double.parseDouble(caloDfField.getText());
+        IO.writeFileMeal(mealList);
+        caloDfField.setText("");
     }
+
     @FXML
     void toggleButton (ActionEvent event) {
         if (event.getSource() == button_1) {
@@ -205,32 +191,12 @@ public class historyController implements Initializable {
     }
     public void changeSceneHome(ActionEvent event) throws IOException {
         changeScene(event,"home-view.fxml");
-        /*Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("home-view.fxml"));
-        Parent add = loader.load();
-        Scene scene = new Scene(add);
-        scene.setFill(Color.TRANSPARENT);
-
-        stage.setScene(scene);*/
     }
     public void changeSceneDishAdd(ActionEvent event) throws IOException {
         changeScene(event,"home-view-add.fxml");
-        /*Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("home-view-add.fxml"));
-        Parent add = loader.load();
-        Scene scene = new Scene(add);
-        scene.setFill(Color.TRANSPARENT);
-
-        stage.setScene(scene);*/
-
     }
     public void changeScene(ActionEvent event,String nameF) throws IOException {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource(nameF));
         Parent add = loader.load();

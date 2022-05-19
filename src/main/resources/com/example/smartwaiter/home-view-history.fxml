@@ -23,7 +23,7 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="948.0" prefWidth="1600.0" style="-fx-background-color: #313040; -fx-background-radius: 30;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.smartwaiter.historyController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="850.0" prefWidth="1500.0" style="-fx-background-color: #313040; -fx-background-radius: 30;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.smartwaiter.historyController">
     <top>
         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-background-radius: 30 30 0 0; -fx-background-color: #313040;" BorderPane.alignment="CENTER">
             <children>
@@ -145,25 +145,25 @@
             <children>
                 <TableView fx:id="table" prefHeight="350.0" prefWidth="1440.0" stylesheets="@views/style.css">
                     <columns>
-                        <TableColumn fx:id="nameColumn" prefWidth="600.0" text="Meal" />
+                        <TableColumn fx:id="nameColumn" prefWidth="630.0" text="Meal" />
                         <TableColumn fx:id="dateColumn" minWidth="0.0" prefWidth="300.0" text="Day" />
                         <TableColumn fx:id="priceColumn" prefWidth="150.0" text="Price" />
                         <TableColumn fx:id="caloColumn" prefWidth="150.0" text="Calo" />
-                        <TableColumn fx:id="actionColumn" prefWidth="220.0" text="Action" />
+                        <TableColumn fx:id="actionColumn" prefWidth="90.0" text="Action" />
                     </columns>
                 </TableView>
-                <VBox alignment="CENTER" prefWidth="1440.0">
+                <VBox alignment="CENTER" prefWidth="1340.0">
                     <children>
                         <Label alignment="CENTER" prefHeight="50.0" prefWidth="1340.0" text="BMR" textAlignment="CENTER">
                             <font>
-                                <Font name="Cambria Bold Italic" size="48.0" />
+                                <Font name="Cambria Bold Italic" size="36.0" />
                             </font>
                         </Label>
                         <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="1510.0">
                             <children>
                                 <Label prefHeight="17.0" prefWidth="200.0" text="Age">
                                     <font>
-                                        <Font name="Cambria Bold" size="24.0" />
+                                        <Font name="Cambria Bold" size="18.0" />
                                     </font>
                                 </Label>
                                 <TextField fx:id="ageField" prefHeight="25.0" prefWidth="200.0" promptText="15-80 " style="-fx-background-radius: 5;">
@@ -176,10 +176,10 @@
                                     <children>
                                         <Label prefHeight="30.0" prefWidth="200.0" text="Gender">
                                             <font>
-                                                <Font name="Cambria Bold" size="24.0" />
+                                                <Font name="Cambria Bold" size="18.0" />
                                             </font>
                                         </Label>
-                                        <ToggleButton fx:id="button_1" mnemonicParsing="false" onAction="#toggleButton" prefWidth="90.0" selected="true" style="-fx-background-radius: 30; -fx-background-color: D68162;" stylesheets="@views/style.css" text="Male">
+                                        <ToggleButton fx:id="button_1" mnemonicParsing="false" onAction="#toggleButton" prefWidth="90.0" selected="true" style="-fx-background-radius: 30; -fx-background-color: BDCEC6;" stylesheets="@views/style.css" text="Male">
                                             <font>
                                                 <Font name="Cambria Bold" size="18.0" />
                                             </font>
@@ -198,7 +198,7 @@
                             <children>
                                 <Label prefHeight="17.0" prefWidth="200.0" text="Height">
                                     <font>
-                                        <Font name="Cambria Bold" size="24.0" />
+                                        <Font name="Cambria Bold" size="18.0" />
                                     </font>
                                 </Label>
                                 <TextField fx:id="heightField" prefHeight="25.0" prefWidth="200.0" promptText="Your height" style="-fx-background-radius: 5;">
@@ -209,7 +209,7 @@
                                 <Pane prefHeight="60.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
                                 <Label prefHeight="17.0" prefWidth="200.0" text="Weight">
                                     <font>
-                                        <Font name="Cambria Bold" size="24.0" />
+                                        <Font name="Cambria Bold" size="18.0" />
                                     </font>
                                 </Label>
                                 <TextField fx:id="weightField" prefHeight="25.0" prefWidth="200.0" promptText="Your weight" style="-fx-background-radius: 5;">
@@ -223,7 +223,7 @@
                             <children>
                                 <Label prefHeight="30.0" prefWidth="400.0" text="Daily activities">
                                     <font>
-                                        <Font name="Cambria Bold" size="24.0" />
+                                        <Font name="Cambria Bold" size="18.0" />
                                     </font>
                                 </Label>
                                 <ChoiceBox fx:id="typeChoice" prefHeight="30.0" prefWidth="400.0" styleClass="type-choice" stylesheets="@views/style.css">
@@ -259,23 +259,23 @@
                             <children>
                                 <Label prefHeight="17.0" prefWidth="200.0" text="Set default calo ">
                                     <font>
-                                        <Font name="Cambria Bold" size="24.0" />
+                                        <Font name="Cambria Bold" size="18.0" />
                                     </font>
                                 </Label>
-                                <TextField onAction="#getDefaultCalo" prefHeight="25.0" prefWidth="200.0" promptText="Calo" style="-fx-background-radius: 5;">
+                                <TextField fx:id="caloDfField" onAction="#setDfCalo" prefHeight="25.0" prefWidth="200.0" promptText="Calo" style="-fx-background-radius: 5;">
                                     <font>
                                         <Font name="Cambria" size="14.0" />
                                     </font>
                                 </TextField>
-                                <Pane prefHeight="30.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-                                <Label alignment="CENTER" prefHeight="30.0" prefWidth="200.0" text="Advices">
+                                <Pane prefHeight="28.0" prefWidth="191.0" HBox.hgrow="ALWAYS" />
+                                <Label alignment="CENTER" prefHeight="28.0" prefWidth="164.0" text="Advices">
                                     <font>
-                                        <Font name="Cambria Bold" size="24.0" />
+                                        <Font name="Cambria Bold" size="18.0" />
                                     </font>
                                 </Label>
-                                <Label fx:id="adviceLabel" prefHeight="30.0" prefWidth="500.0" text="eat more">
+                                <Label fx:id="adviceLabel" prefHeight="28.0" prefWidth="498.0" text="eat more">
                                     <font>
-                                        <Font name="Cambria Bold" size="24.0" />
+                                        <Font name="Cambria Bold" size="18.0" />
                                     </font>
                                 </Label>
                             </children>
@@ -284,56 +284,28 @@
                             <children>
                                 <Label prefHeight="17.0" prefWidth="300.0" text="Total calories last month:">
                                     <font>
-                                        <Font name="Cambria Bold" size="24.0" />
+                                        <Font name="Cambria Bold" size="18.0" />
                                     </font>
                                 </Label>
                                 <Label fx:id="caloLastMonthLabel" prefHeight="17.0" prefWidth="200.0" text="60000">
                                     <font>
-                                        <Font name="Cambria Bold" size="24.0" />
+                                        <Font name="Cambria Bold" size="18.0" />
                                     </font>
                                 </Label>
                                 <Pane prefHeight="60.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
                                 <Label prefHeight="17.0" prefWidth="300.0" text="Total calories this month:">
                                     <font>
-                                        <Font name="Cambria Bold" size="24.0" />
+                                        <Font name="Cambria Bold" size="18.0" />
                                     </font>
                                 </Label>
                                 <Label fx:id="caloThisMonthLabel" prefHeight="17.0" prefWidth="200.0" text="13452">
                                     <font>
-                                        <Font name="Cambria Bold" size="24.0" />
-                                    </font>
-                                </Label>
-                            </children>
-                        </HBox>
-                        <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="1510.0">
-                            <children>
-                                <Label prefHeight="17.0" prefWidth="300.0" text="Total calories today:">
-                                    <font>
-                                        <Font name="Cambria Bold" size="24.0" />
-                                    </font>
-                                </Label>
-                                <Label fx:id="caloTodayLabel" prefHeight="17.0" prefWidth="200.0" text="2000">
-                                    <font>
-                                        <Font name="Cambria Bold" size="24.0" />
-                                    </font>
-                                </Label>
-                                <Pane prefHeight="60.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-                                <Label prefHeight="17.0" prefWidth="300.0" text="Need more:">
-                                    <font>
-                                        <Font name="Cambria Bold" size="24.0" />
-                                    </font>
-                                </Label>
-                                <Label fx:id="caloMoreLabel" prefHeight="17.0" prefWidth="200.0" text="234">
-                                    <font>
-                                        <Font name="Cambria Bold" size="24.0" />
+                                        <Font name="Cambria Bold" size="18.0" />
                                     </font>
                                 </Label>
                             </children>
                         </HBox>
                     </children>
-                    <padding>
-                        <Insets left="50.0" right="50.0" />
-                    </padding>
                 </VBox>
             </children>
             <padding>

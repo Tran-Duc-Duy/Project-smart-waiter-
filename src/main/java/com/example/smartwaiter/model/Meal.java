@@ -46,6 +46,9 @@ public class Meal {
     public String getDate() {
         return formatter1.format(date);
     }
+    public Date getD(){
+        return date;
+    }
 
     public void setDate(Date date) {
         this.date = date;

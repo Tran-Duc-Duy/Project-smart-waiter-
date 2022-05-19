@@ -15,6 +15,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -91,7 +92,7 @@ public class editController implements Initializable {
         actionColumn.setCellFactory(param -> new TableCell<Dish, Void>() {
             private final Button editButton = new Button("edit");
             private final Button deleteButton = new Button("delete");
-            private final HBox pane = new HBox(deleteButton, editButton);
+            private final VBox pane = new VBox(deleteButton, editButton);
 
             {
                 deleteButton.setOnAction(event -> {
@@ -200,12 +201,14 @@ public class editController implements Initializable {
                     dis.setImgView(newDish.getImgView());
                 }
             }
+            changeScene(event,"home-view-add.fxml");
         }
         else{
             dishList2.add(newDish);
         }
         //sort(dishList2);
-        imageView.setImage(new Image("D:\\DuyStudy\\FILE_Ky2_LapTrinh\\SmartWaiter\\src\\main\\resources\\com\\example\\smartwaiter\\img\\Chef.png"));
+        String currentDirectory = System.getProperty("user.dir");
+        imageView.setImage(new Image(currentDirectory.replaceAll("\\\\","\\\\")+"\\src\\main\\resources\\com\\example\\smartwaiter\\img\\Chef.png"));
         IO.writeFile(dishList2);
         btAdd.setText("Add");
         flagADD=0;

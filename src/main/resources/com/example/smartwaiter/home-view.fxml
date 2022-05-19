@@ -83,7 +83,7 @@
                         <Insets left="20.0" />
                     </HBox.margin>
                 </ImageView>
-                <Pane prefHeight="100.0" prefWidth="296.0" HBox.hgrow="ALWAYS" />
+                <Pane prefHeight="100.0" prefWidth="168.0" HBox.hgrow="ALWAYS" />
                 <Label prefHeight="60.0" prefWidth="384.0" text="Enjoy your meal!" textFill="WHITE">
                     <font>
                         <Font name="Cambria Bold" size="48.0" />
@@ -157,9 +157,9 @@
     <center>
         <VBox alignment="TOP_CENTER" prefWidth="1475.0" spacing="5.0" style="-fx-background-radius: 30; -fx-background-color: #F7EFE2;" BorderPane.alignment="CENTER">
             <children>
-                <Label text="My Dishs">
+                <Label text="My Dishes">
                     <font>
-                        <Font name="Cambria Bold" size="48.0" />
+                        <Font name="Cambria Bold" size="36.0" />
                     </font>
                     <padding>
                         <Insets top="10.0" />
@@ -167,7 +167,7 @@
                 </Label>
                 <ScrollPane prefHeight="350.0" prefWidth="1440.0" style="-fx-background-radius: 30 0 30 0;">
                     <content>
-                        <GridPane fx:id="dishGrid" alignment="TOP_CENTER" maxWidth="1400.0" prefHeight="300.0" prefWidth="1400.0" style="-fx-background-radius: 30; -fx-background-color: #FBCB7B;">
+                        <GridPane fx:id="dishGrid" alignment="TOP_CENTER" maxWidth="1400.0" prefHeight="300.0" prefWidth="1300.0" style="-fx-background-radius: 30; -fx-background-color: #FBCB7B;">
                             <rowConstraints>
                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                             </rowConstraints>
@@ -186,12 +186,18 @@
                             <children>
                                 <HBox prefWidth="650.0">
                                     <children>
-                                        <Label fx:id="recommendLabel" prefHeight="44.0" prefWidth="300.0" text="Recomment by">
+                                        <Label fx:id="recommendLabel" prefHeight="44.0" prefWidth="300.0" text="Recommend">
                                             <font>
                                                 <Font name="Cambria Bold" size="36.0" />
                                             </font></Label>
-                                        <ChoiceBox fx:id="typeChoice" prefHeight="42.0" prefWidth="200.0" styleClass="type-choice" stylesheets="@views/style.css" />
-                                        <TextField fx:id="howManyField" onAction="#randomSelection" prefHeight="42.0" prefWidth="150.0" promptText="how many?" />
+                                        <ChoiceBox fx:id="typeChoice" prefHeight="42.0" prefWidth="200.0" styleClass="type-choice" stylesheets="@views/style.css">
+                                 <HBox.margin>
+                                    <Insets bottom="5.0" />
+                                 </HBox.margin></ChoiceBox>
+                                        <TextField fx:id="howManyField" onAction="#randomSelection" prefHeight="42.0" prefWidth="150.0" promptText="how many?">
+                                 <HBox.margin>
+                                    <Insets bottom="5.0" left="5.0" />
+                                 </HBox.margin></TextField>
                                     </children>
                                 </HBox>
                                 <HBox prefHeight="256.0" prefWidth="689.0">
@@ -213,11 +219,48 @@
                         <Pane HBox.hgrow="ALWAYS" />
                         <VBox alignment="TOP_CENTER" prefWidth="700.0">
                             <children>
-                                <Label alignment="CENTER" prefHeight="44.0" prefWidth="300.0" text="Your order">
-                                    <font>
-                                        <Font name="Cambria Bold" size="36.0" />
-                                    </font>
-                                </Label>
+                        <HBox>
+                           <children>
+                                      <Label alignment="CENTER" prefHeight="44.0" prefWidth="335.0" text="Your meal">
+                                          <font>
+                                              <Font name="Cambria Bold" size="36.0" />
+                                          </font>
+                                      </Label>
+                              <Pane prefHeight="44.0" prefWidth="247.0" HBox.hgrow="ALWAYS" />
+                              <VBox>
+                                 <children>
+                                    <HBox>
+                                       <children>
+                                          <Label alignment="CENTER" prefHeight="44.0" prefWidth="200.0" text="Default calo:">
+                                             <font>
+                                                <Font name="Cambria Bold" size="18.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="caloDefaultLabel" alignment="CENTER" prefHeight="44.0" prefWidth="150.0" text="Default calo">
+                                             <font>
+                                                <Font name="Cambria Bold" size="18.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                    <HBox>
+                                       <children>
+                                          <Label alignment="CENTER" prefHeight="44.0" prefWidth="200.0" text="Nead more:">
+                                             <font>
+                                                <Font name="Cambria Bold" size="18.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="caloNeedLabel" alignment="CENTER" prefHeight="44.0" prefWidth="150.0" text="Nead more">
+                                             <font>
+                                                <Font name="Cambria Bold" size="18.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
                                 <TableView fx:id="tableOrder" prefHeight="256.0" prefWidth="700.0" stylesheets="@views/style.css">
                                     <columns>
                                         <TableColumn fx:id="orderColumn" prefWidth="543.0" text="order" />
@@ -264,6 +307,9 @@
                                             <font>
                                                 <Font name="Cambria Bold" size="14.0" />
                                             </font>
+                                 <HBox.margin>
+                                    <Insets bottom="2.0" top="5.0" />
+                                 </HBox.margin>
                                         </Button>
                                     </children>
                                 </HBox>

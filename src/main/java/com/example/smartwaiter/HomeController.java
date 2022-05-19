@@ -71,10 +71,17 @@ public class HomeController implements Initializable {
     @FXML private Label timeTTLabel;
     @FXML private Label caloTTLabel;
     @FXML private Label priceTTLabel;
+    @FXML private Label caloDefaultLabel;
+    @FXML private Label caloNeedLabel;
+    private ObservableList<Meal> mealList;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         dishList = IO.readFile();
+        mealList = IO.readFileMeal();
+        caloDefaultLabel.setText(String.valueOf(historyController.defaultCalo));
+        caloNeedLabel.setText(String.valueOf(caloToday()));
+
         dishListRecommend = FXCollections.observableArrayList();
         dishListOrder=FXCollections.observableArrayList();
         resultColumn.setCellValueFactory(new PropertyValueFactory<>("myOrder"));
@@ -86,7 +93,7 @@ public class HomeController implements Initializable {
         tableOrder.setItems(dishListOrder);
         //..................
         int temp=makeUp(dishList,0);
-        recommendLabel.setText("admin");
+        //recommendLabel.setText("admin");
         //....
         typeChoice.getItems().addAll(optionS);
         typeChoice.setValue("By price");
@@ -131,6 +138,18 @@ public class HomeController implements Initializable {
         });
 
 
+    }
+    public double caloToday(){
+        Calendar cale = Calendar.getInstance();
+        Date date = cale.getTime();
+        int a =date.getDate();
+        double rs=0.0;
+        for(Meal me:mealList){
+            if(me.getD().getDate()==a){
+                rs+=me.getCalo();
+            }
+        }
+        return historyController.defaultCalo-rs;
     }
     private void Notification(){
         double ttTime=0.0, ttPrice=0.0,ttCalo=0.0;
@@ -182,7 +201,6 @@ public class HomeController implements Initializable {
         for (int i=0;i<dishList.size();i++) {
             if(dishList.get(i).getNameDish().contains(searchTextField.getText())){
                 dishListSearch.add(dishList.get(i));
-                System.out.println("alo");
             }
         }
         int temp=makeUp(dishListSearch,0);
@@ -190,28 +208,10 @@ public class HomeController implements Initializable {
     }
 
     public void changeSceneDishAdd(ActionEvent event) throws IOException {
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("home-view-add.fxml"));
-        Parent add = loader.load();
-        Scene scene = new Scene(add);
-        scene.setFill(Color.TRANSPARENT);
-
-        stage.setScene(scene);
-
+        changeScene(event,"home-view-add.fxml");
     }
     public void changeSceneDishHistory(ActionEvent event) throws IOException {
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("home-view-history.fxml"));
-        Parent add = loader.load();
-        Scene scene = new Scene(add);
-        scene.setFill(Color.TRANSPARENT);
-
-        stage.setScene(scene);
-
+        changeScene(event,"home-view-history.fxml");
     }
     public void randomSelection(ActionEvent event) {
         check = Double.parseDouble(howManyField.getText());
@@ -295,7 +295,10 @@ public class HomeController implements Initializable {
         stage.close();
     }
 
-    public void confirmB(ActionEvent event) {
+    public void confirmB(ActionEvent event) throws IOException {
+        if(dishListOrder.size()==0){
+            return;
+        }
         ObservableList<Meal> mealList=IO.readFileMeal();
         Calendar cale = Calendar.getInstance();
         Date date = cale.getTime();
@@ -304,8 +307,18 @@ public class HomeController implements Initializable {
         IO.writeFileMeal(mealList);
         dishListOrder.clear();
         Notification();
+        changeScene(event,"home-view.fxml");
     }
+    public void changeScene(ActionEvent event, String nameF) throws IOException {
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource(nameF));
+        Parent add = loader.load();
+        Scene scene = new Scene(add);
+        scene.setFill(Color.TRANSPARENT);
 
+        stage.setScene(scene);
+    }
 }
  /*   public void randomSelectionByCalo(ActionEvent event) {
         check = Double.parseDouble(caloField.getText());

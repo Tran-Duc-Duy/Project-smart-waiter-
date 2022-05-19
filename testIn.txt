@@ -20,3 +20,5 @@
 20;testngu;soup;22.0;11.0;11.0;D:\DuyStudy\FILE_Ky2_LapTrinh\SmartWaiter\src\main\resources\com\example\smartwaiter\img\testngu.png;jhgkhjg/nhgfghfhjg;
 21;Day la salad;salad;200.0;50.0;90.0;D:\DuyStudy\FILE_Ky2_LapTrinh\SmartWaiter\src\main\resources\com\example\smartwaiter\img\Day la salad.png;cla cla;
 22;Code;main course;0.0;1.0E16;1.0E16;D:\DuyStudy\FILE_Ky2_LapTrinh\SmartWaiter\src\main\resources\com\example\smartwaiter\img\Code.png;code is my favorite food every day;
+23;Test img;salad;44.0;111.0;23.0;D:\DuyStudy\FILE_Ky2_LapTrinh\SmartWaiter\src\main\resources\com\example\smartwaiter\img\Test img.png;maybe have bug here;
+24;cpp;main course;0.0;11111.0;22222.0;D:\DuyStudy\FILE_Ky2_LapTrinh\SmartWaiter\src\main\resources\com\example\smartwaiter\img\cpp.png;haha pls;

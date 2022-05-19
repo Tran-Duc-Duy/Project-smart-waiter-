@@ -23,14 +23,14 @@
                     <children>
                         <Label fx:id="nameLabel" alignment="TOP_LEFT" prefHeight="47.0" prefWidth="157.0" text="Ten" textAlignment="CENTER" textFill="#f2f2f2">
                             <font>
-                                <Font name="Cambria Bold" size="24.0" />
+                                <Font name="Cambria Bold" size="20.0" />
                             </font>
                         </Label>
                         <HBox>
                             <children>
                                 <Label fx:id="giaLabel" alignment="CENTER" prefHeight="17.0" prefWidth="111.0" text="Gia" textAlignment="CENTER" textFill="#f2f2f2">
                                     <font>
-                                        <Font name="Cambria Bold" size="24.0" />
+                                        <Font name="Cambria Bold" size="18.0" />
                                     </font>
                                 </Label>
                                 <Pane prefHeight="20.0" prefWidth="20.0" HBox.hgrow="ALWAYS" />
@@ -48,7 +48,7 @@
                             <children>
                                 <Label fx:id="caloLabel" alignment="CENTER" prefHeight="17.0" prefWidth="111.0" text="Calo " textAlignment="CENTER" textFill="#f2f2f2">
                                     <font>
-                                        <Font name="Cambria Bold" size="24.0" />
+                                        <Font name="Cambria Bold" size="18.0" />
                                     </font>
                                 </Label>
                                 <Pane prefHeight="20.0" prefWidth="20.0" HBox.hgrow="ALWAYS" />
@@ -63,7 +63,7 @@
                             <children>
                                 <Label fx:id="timeLabel" alignment="CENTER" prefHeight="17.0" prefWidth="111.0" text="Time " textAlignment="CENTER" textFill="#f2f2f2">
                                     <font>
-                                        <Font name="Cambria Bold" size="24.0" />
+                                        <Font name="Cambria Bold" size="18.0" />
                                     </font>
                                 </Label>
                                 <Pane prefHeight="20.0" prefWidth="20.0" HBox.hgrow="ALWAYS" />
@@ -78,7 +78,7 @@
                             <children>
                                 <Label fx:id="typeLabel" alignment="CENTER" prefHeight="17.0" prefWidth="111.0" text="Type" textAlignment="CENTER" textFill="#f2f2f2">
                                     <font>
-                                        <Font name="Cambria Bold" size="24.0" />
+                                        <Font name="Cambria Bold" size="18.0" />
                                     </font>
                                 </Label>
                                 <Pane prefHeight="20.0" prefWidth="20.0" HBox.hgrow="ALWAYS" />
@@ -96,21 +96,14 @@
                 <Insets bottom="10.0" left="20.0" right="10.0" top="20.0" />
             </padding>
         </HBox>
-        <HBox alignment="CENTER_LEFT" prefHeight="50.0">
-            <children>
-                <Label fx:id="descriptionLabel" alignment="TOP_LEFT" prefHeight="50.0" prefWidth="320.0" text="Description" textFill="#f2f2f2">
-                    <font>
-                        <Font name="Cambria Bold" size="18.0" />
-                    </font>
-                    <HBox.margin>
-                        <Insets />
-                    </HBox.margin>
-                    <padding>
-                        <Insets left="20.0" right="20.0" />
-                    </padding>
-                </Label>
-            </children>
-        </HBox>
+          <Label fx:id="descriptionLabel" alignment="TOP_LEFT" prefHeight="57.0" prefWidth="310.0" text="Description" textFill="#f2f2f2">
+              <font>
+                  <Font name="Cambria Bold" size="18.0" />
+              </font>
+              <padding>
+                  <Insets left="20.0" right="20.0" />
+              </padding>
+          </Label>
     </children>
     <padding>
         <Insets bottom="10.0" />

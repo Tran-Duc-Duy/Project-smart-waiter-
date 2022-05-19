@@ -6,6 +6,13 @@ import com.example.smartwaiter.model.Meal;
 import com.example.smartwaiter.model.Order;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
@@ -84,34 +91,25 @@ public class IO {
     public static void writeFileMeal(ObservableList<Meal> mealList) {
         try {
             FileWriter fw = new FileWriter("testHistory.txt");
+            fw.write(historyController.defaultCalo+"\n");
             for(Meal a : mealList){
-                fw.append(a+"\n");
+                fw.write(a+"\n");
             }
             fw.close();
-
         } catch (Exception e) {
             System.out.println(e);
         }
-
-
     }
     public static ObservableList<Meal> readFileMeal(){
         List<Meal> list = new ArrayList<>();
         List<Dish> newListDish=new ArrayList<>();
         List<Order> listOrder = new ArrayList<>();
-
-        //List<Dish> listDish = readFile();
-        // em chua chinh date
-        Calendar cale = Calendar.getInstance();
-        Date date = cale.getTime();
         SimpleDateFormat formatter1=new SimpleDateFormat("dd:MM:yyyy");
 
-        double price = 0;
-        double calo = 0;
         int i=0;
         try{
-
             Scanner f = new Scanner(new File("testHistory.txt"));
+            historyController.defaultCalo=Double.parseDouble(f.nextLine());
             while (f.hasNextLine()) {
                 i=0;
                 listOrder=new ArrayList<>();
@@ -119,7 +117,6 @@ public class IO {
                 Date date1=new Date();
                 for(int a=0;a<listString.length;a++){
                     if(i==0){
-                        //d.setTime(listDishString[1]);
                         date1=formatter1.parse(listString[0]);
                         i++;
                         continue;
@@ -147,28 +144,6 @@ public class IO {
                 }
                 Meal m =new Meal(listOrder,date1);
                 list.add(m);
-                /*for (String thisDish : listDishString) {
-                    for(Dish dish : listDish ) {
-                        if(thisDish.equals(dish.getNameDish())) {
-                            newListDish.add(dish);
-                            price += dish.getTotalTien();
-                            calo +=dish.getTotalCalo();
-                        }
-                    }
-                }
-                Order order = new Order(newListDish,1);
-                listOrder.add(order);
-                newListDish.clear();
-
-                char k = f.nextLine().charAt(f.nextLine().length()-1);
-                if (k == '.')  {
-                    //List<Order> listOrder, Date date, double price, double calo
-                    Meal meal = new Meal(listOrder,date, price, calo );
-                    list.add(meal);
-                    listOrder.clear();
-                    price = 0;
-                    calo = 0;
-                }*/
             }
             f.close();
         }catch (Exception e) {
@@ -177,4 +152,5 @@ public class IO {
         ObservableList<Meal> dishListAll= FXCollections.observableArrayList(list);
         return dishListAll;
     }
+
 }
