@@ -1,6 +1,7 @@
 package com.example.smartwaiter;
 
 import com.example.smartwaiter.model.Dish;
+import com.example.smartwaiter.model.Meal;
 import com.example.smartwaiter.model.Order;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,14 +21,11 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import static com.example.smartwaiter.IO.readFile;
 
@@ -35,7 +33,7 @@ import static com.example.smartwaiter.IO.readFile;
 public class HomeController implements Initializable {
     @FXML
     private BorderPane bp;
-    //.... recomment by
+    //.... recommend by
     @FXML private TextField howManyField;
     @FXML private Label recommendLabel;
 
@@ -70,6 +68,10 @@ public class HomeController implements Initializable {
     @FXML private TableColumn<Order, Void> actionOrderColumn;
 
     //private List<Dish> orderList;
+    @FXML private Label timeTTLabel;
+    @FXML private Label caloTTLabel;
+    @FXML private Label priceTTLabel;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         dishList = IO.readFile();
@@ -96,8 +98,8 @@ public class HomeController implements Initializable {
             {
                 orderButton.setOnAction(event -> {
                     Order getPatient = getTableView().getItems().get(getIndex());
-
                     dishListOrder.add(getPatient);
+                    Notification();
                 });
 
             }
@@ -116,6 +118,7 @@ public class HomeController implements Initializable {
                 deleteButton.setOnAction(event -> {
                     Order getPatient = getTableView().getItems().get(getIndex());
                     dishListOrder.remove(getPatient);
+                    Notification();
                 });
 
             }
@@ -126,6 +129,21 @@ public class HomeController implements Initializable {
                 setGraphic(empty ? null : pane);
             }
         });
+
+
+    }
+    private void Notification(){
+        double ttTime=0.0, ttPrice=0.0,ttCalo=0.0;
+        for(Order s:dishListOrder) {
+            for(Dish d : s.getListDish()){
+                ttTime+=d.getTime();
+                ttCalo+=d.getTotalCalo();
+                ttPrice+=d.getTotalTien();
+            }
+        }
+        timeTTLabel.setText(String.valueOf(ttTime));
+        caloTTLabel.setText(String.valueOf(ttCalo));
+        priceTTLabel.setText(String.valueOf(ttPrice));
     }
     private int makeUp(ObservableList<Dish> dishList,int columns){
         int row=1;
@@ -147,6 +165,7 @@ public class HomeController implements Initializable {
                     @Override
                     public void handle(ActionEvent event) {
                         dishListOrder.add(new Order(re,1));
+                        Notification();
                     }
                 });
                 box.getChildren().add(btn);
@@ -275,8 +294,16 @@ public class HomeController implements Initializable {
         Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
         stage.close();
     }
-    public void confirmB(ActionEvent event) {
 
+    public void confirmB(ActionEvent event) {
+        ObservableList<Meal> mealList=IO.readFileMeal();
+        Calendar cale = Calendar.getInstance();
+        Date date = cale.getTime();
+        Meal m = new Meal(dishListOrder,date);
+        mealList.add(m);
+        IO.writeFileMeal(mealList);
+        dishListOrder.clear();
+        Notification();
     }
 
 }

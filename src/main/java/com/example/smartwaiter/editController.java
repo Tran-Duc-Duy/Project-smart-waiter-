@@ -101,6 +101,7 @@ public class editController implements Initializable {
                     for (int i = ids - 1; i < dishList2.size(); i++) {
                         dishList2.get(i).setId(i + 1);
                     }
+                    IO.writeFile(dishList2);
                 });
 
                 editButton.setOnAction(event -> {

@@ -3,13 +3,13 @@ package com.example.smartwaiter;
 
 import com.example.smartwaiter.model.Dish;
 import com.example.smartwaiter.model.Meal;
+import com.example.smartwaiter.model.Order;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class IO {
     public static void writeFile(ObservableList<Dish> dishList){
@@ -41,8 +41,8 @@ public class IO {
                         listDishString[6],
                         listDishString[7]
                 );
-                list.add(newDish);
                 newDish.costumDescription2();
+                list.add(newDish);
             }
             f.close();
         }catch (Exception e) {
@@ -81,11 +81,99 @@ public class IO {
         return newPath;
     }
 
-    public static void writeFileMeal(ObservableList<Meal> dishList) {
+    public static void writeFileMeal(ObservableList<Meal> mealList) {
+        try {
+            FileWriter fw = new FileWriter("testHistory.txt");
+            for(Meal a : mealList){
+                fw.append(a+"\n");
+            }
+            fw.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
 
     }
     public static ObservableList<Meal> readFileMeal(){
         List<Meal> list = new ArrayList<>();
+        List<Dish> newListDish=new ArrayList<>();
+        List<Order> listOrder = new ArrayList<>();
+
+        //List<Dish> listDish = readFile();
+        // em chua chinh date
+        Calendar cale = Calendar.getInstance();
+        Date date = cale.getTime();
+        SimpleDateFormat formatter1=new SimpleDateFormat("dd:MM:yyyy");
+
+        double price = 0;
+        double calo = 0;
+        int i=0;
+        try{
+
+            Scanner f = new Scanner(new File("testHistory.txt"));
+            while (f.hasNextLine()) {
+                i=0;
+                listOrder=new ArrayList<>();
+                String[] listString = f.nextLine().split("#");
+                Date date1=new Date();
+                for(int a=0;a<listString.length;a++){
+                    if(i==0){
+                        //d.setTime(listDishString[1]);
+                        date1=formatter1.parse(listString[0]);
+                        i++;
+                        continue;
+                    }
+
+                    String[] listOrderString = listString[a].split("@");
+                    newListDish=new ArrayList<>();
+                    for(int b=0;b<listOrderString.length;b++){
+                        String[] listDishString = listOrderString[b].split(";");
+                        Dish newDish = new Dish(
+                                Integer.parseInt(listDishString[0]),
+                                listDishString[1],
+                                listDishString[2],
+                                Double.parseDouble(listDishString[3]),
+                                Double.parseDouble(listDishString[4]),
+                                Double.parseDouble(listDishString[5]),
+                                listDishString[6],
+                                listDishString[7]
+                        );
+                        newDish.costumDescription2();
+                        newListDish.add(newDish);
+                    }
+                    Order o =new Order(newListDish,1);
+                    listOrder.add(o);
+                }
+                Meal m =new Meal(listOrder,date1);
+                list.add(m);
+                /*for (String thisDish : listDishString) {
+                    for(Dish dish : listDish ) {
+                        if(thisDish.equals(dish.getNameDish())) {
+                            newListDish.add(dish);
+                            price += dish.getTotalTien();
+                            calo +=dish.getTotalCalo();
+                        }
+                    }
+                }
+                Order order = new Order(newListDish,1);
+                listOrder.add(order);
+                newListDish.clear();
+
+                char k = f.nextLine().charAt(f.nextLine().length()-1);
+                if (k == '.')  {
+                    //List<Order> listOrder, Date date, double price, double calo
+                    Meal meal = new Meal(listOrder,date, price, calo );
+                    list.add(meal);
+                    listOrder.clear();
+                    price = 0;
+                    calo = 0;
+                }*/
+            }
+            f.close();
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
         ObservableList<Meal> dishListAll= FXCollections.observableArrayList(list);
         return dishListAll;
     }

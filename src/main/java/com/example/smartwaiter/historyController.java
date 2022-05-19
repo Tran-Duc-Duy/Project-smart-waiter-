@@ -81,7 +81,7 @@ public class historyController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        List<Dish> list=new ArrayList<Dish>();
+        /*List<Dish> list=new ArrayList<Dish>();
         List<Order> listO=new ArrayList<>();
         Dish a =new Dish(11,"Thit ga","soup",150.0,150.0,150.0,"D:\\DuyStudy\\FILE_Ky2_LapTrinh\\SmartWaiter\\src\\main\\resources\\com\\example\\smartwaiter\\img\\Chef.png","alo alo");
         Dish b =new Dish(11,"Thit ga","soup",150.0,150.0,150.0,"D:\\DuyStudy\\FILE_Ky2_LapTrinh\\SmartWaiter\\src\\main\\resources\\com\\example\\smartwaiter\\img\\Chef.png","alo alo");
@@ -94,14 +94,16 @@ public class historyController implements Initializable {
         Order myOrder3 = new Order(list,1);
         listO.add(myOrder1);
         listO.add(myOrder2);
-        /*listO.add(myOrder3);*/
+        *//*listO.add(myOrder3);*//*
         Calendar cale = Calendar.getInstance();
         Date date = cale.getTime();
         mealList= FXCollections.observableArrayList(
                 new Meal(listO,date,100,200),
                 new Meal(listO,date,150,500),
                 new Meal(listO,date,200,100)
-        );
+        );*/
+        mealList=IO.readFileMeal();
+
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
         caloColumn.setCellValueFactory(new PropertyValueFactory<>("calo"));

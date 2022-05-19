@@ -1,24 +1,37 @@
 package com.example.smartwaiter.model;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class Meal {
-    private List<Order> listOrder =new ArrayList<Order>();
-    private String name =listOrder.toString();
+    private List<Order> listOrder = new ArrayList<Order>();
+    private String name ="";
     private Date date;
     private double price;
     private double calo;
 
+    SimpleDateFormat formatter1=new SimpleDateFormat("dd:MM:yyyy");
+    public Meal(List<Order> listOrder, Date date) {
+        this.listOrder = listOrder;
+        this.date = date;
+    }
     public Meal(List<Order> listOrder, Date date, double price, double calo) {
         this.listOrder = listOrder;
         this.date = date;
         this.price = price;
         this.calo = calo;
-        this.name =this.toString();
+        this.name = this.toString();
     }
+
+
+
     public String getName() {
+        String name="";
+        for(Order o : listOrder){
+            name+=o.toString()+"\n";
+        }
         return name;
     }
 
@@ -30,8 +43,8 @@ public class Meal {
         this.listOrder = listOrder;
     }
 
-    public Date getDate() {
-        return date;
+    public String getDate() {
+        return formatter1.format(date);
     }
 
     public void setDate(Date date) {
@@ -39,7 +52,13 @@ public class Meal {
     }
 
     public double getPrice() {
-        return price;
+        double a=0;
+        for(Order o : listOrder){
+            for(Dish d:o.getListDish()){
+                a+=d.getTotalTien();
+            }
+        }
+        return a;
     }
 
     public void setPrice(double price) {
@@ -47,7 +66,13 @@ public class Meal {
     }
 
     public double getCalo() {
-        return calo;
+        double a=0;
+        for(Order o : listOrder){
+            for(Dish d:o.getListDish()){
+                a+=d.getTotalCalo();
+            }
+        }
+        return a;
     }
 
     public void setCalo(double calo) {
@@ -56,9 +81,13 @@ public class Meal {
 
     @Override
     public String toString() {
-        String str="";
-        for(Order order : listOrder) {
-            str+= order.toString()+" \n";
+
+        String str = formatter1.format(date)+ "#";
+        for (Order order : listOrder) {
+            for(Dish item : order.getListDish()){
+                str += item.toString() + "@";
+            }
+            str+= "#";
         }
         return str;
     }

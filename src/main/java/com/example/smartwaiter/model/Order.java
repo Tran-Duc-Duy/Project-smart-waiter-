@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Order {
-    private List<Dish> listOrder=new ArrayList<>();;
+    private List<Dish> listDish=new ArrayList<>();;
     private String myOrder=this.toString();
     private double sum;
     /*private double sumPrice = getSumPrice();
     private double sumCalo= getSumCalo();
     private double sumTime=getSumTime();*/
-    public Order(List<Dish> listOrder, int option) {
-        this.listOrder = listOrder;
+    public Order(List<Dish> listDish, int option) {
+        this.listDish = listDish;
         if(option==1){
             sum=getSumPrice();
         }else if(option==2){
@@ -25,12 +25,12 @@ public class Order {
         this.listOrder.add(dish);
     }*/
 
-    public List<Dish> getListOrder() {
-        return listOrder;
+    public List<Dish> getListDish() {
+        return listDish;
     }
 
-    public void setListOrder(List<Dish> listOrder) {
-        this.listOrder = listOrder;
+    public void setListDish(List<Dish> listDish) {
+        this.listDish = listDish;
     }
 
     public String getMyOrder() {
@@ -44,12 +44,12 @@ public class Order {
     @Override
     public String toString() {
         String str="";
-        if(!listOrder.isEmpty()) {
-            for (int i=0;i<listOrder.size();i++) {
-                if(i!=listOrder.size()-1){
-                    str += listOrder.get(i).getNameDish() + "-";
+        if(!listDish.isEmpty()) {
+            for (int i=0;i<listDish.size();i++) {
+                if(i!=listDish.size()-1){
+                    str += listDish.get(i).getNameDish() + "-";
                 }else{
-                    str += listOrder.get(i).getNameDish();
+                    str += listDish.get(i).getNameDish();
                 }
             }
         }else{
@@ -59,21 +59,21 @@ public class Order {
     }
     public double getSumPrice(){
         double sum =0.0;
-        for(Dish ds:this.listOrder){
+        for(Dish ds:this.listDish){
             sum+=ds.getTotalTien();
         }
         return sum;
     }
     public double getSumCalo(){
         double sum =0.0;
-        for(Dish ds:this.listOrder){
+        for(Dish ds:this.listDish){
             sum+=ds.getTotalCalo();
         }
         return sum;
     }
     public double getSumTime(){
         double sum =0.0;
-        for(Dish ds:this.listOrder){
+        for(Dish ds:this.listDish){
             sum+=ds.getTime();
         }
         return sum;

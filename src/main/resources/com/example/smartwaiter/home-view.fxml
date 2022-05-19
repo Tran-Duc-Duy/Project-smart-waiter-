@@ -234,7 +234,7 @@
                                                 <Font name="Cambria Bold" size="18.0" />
                                             </font>
                                         </Label>
-                                        <Label text="Total price">
+                                        <Label fx:id="priceTTLabel" text="Total price">
                                             <font>
                                                 <Font name="Cambria Bold" size="18.0" />
                                             </font>
@@ -244,7 +244,7 @@
                                                 <Font name="Cambria Bold" size="18.0" />
                                             </font>
                                         </Label>
-                                        <Label text="Total calo">
+                                        <Label fx:id="caloTTLabel" text="Total calo">
                                             <font>
                                                 <Font name="Cambria Bold" size="18.0" />
                                             </font>
@@ -254,11 +254,12 @@
                                                 <Font name="Cambria Bold" size="18.0" />
                                             </font>
                                         </Label>
-                                        <Label text="Total time">
+                                        <Label fx:id="timeTTLabel" text="Total time">
                                             <font>
                                                 <Font name="Cambria Bold" size="18.0" />
                                             </font>
                                         </Label>
+                              <Pane prefHeight="34.0" prefWidth="5.0" HBox.hgrow="ALWAYS" />
                                         <Button mnemonicParsing="false" onAction="#confirmB" styleClass="btn-all" stylesheets="@views/style.css" text="Confirm">
                                             <font>
                                                 <Font name="Cambria Bold" size="18.0" />
