@@ -14,7 +14,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
@@ -32,35 +31,16 @@ import static com.example.smartwaiter.IO.readFile;
 
 public class editController implements Initializable {
     @FXML private TableView<Dish> table;
-
-    @FXML
-    private TableColumn<Dish, Double> caloColumn;
-
-    @FXML
-    private TableColumn<Dish, Integer> idColumn;
-
-    @FXML
-    private TableColumn<Dish, String> imgColumn;
-
-    @FXML
-    private TableColumn<Dish, Double> moneyColumn;
-
-    @FXML
-    private TableColumn<Dish, String> nameColumn;
-
-    @FXML
-    private TableColumn<Dish, Double> timeColumn;
-
-    @FXML
-    private TableColumn<Dish, String> typeColumn;
-    @FXML
-    private TableColumn<Dish, Void> actionColumn;
-
-    @FXML
-    private ImageView imageView;
-    @FXML
-    private TableColumn<Dish, String> descriptionColumn;
-
+    @FXML private TableColumn<Dish, Double> caloColumn;
+    @FXML private TableColumn<Dish, Integer> idColumn;
+    @FXML private TableColumn<Dish, String> imgColumn;
+    @FXML private TableColumn<Dish, Double> moneyColumn;
+    @FXML private TableColumn<Dish, String> nameColumn;
+    @FXML private TableColumn<Dish, Double> timeColumn;
+    @FXML private TableColumn<Dish, String> typeColumn;
+    @FXML private TableColumn<Dish, Void> actionColumn;
+    @FXML private ImageView imageView;
+    @FXML private TableColumn<Dish, String> descriptionColumn;
     @FXML private TextField moneyText;
     @FXML private TextField caloText;
     @FXML private TextField timeText;
@@ -68,7 +48,6 @@ public class editController implements Initializable {
     @FXML private TextField nameText;
     @FXML private ChoiceBox<String> typeChoice;
     @FXML private Label invalidLabel;
-
     @FXML private BorderPane bp;
     @FXML private Button btAdd;
     private String[] food ={"soup", "salad", "main course"};
@@ -119,39 +98,33 @@ public class editController implements Initializable {
                     flagADD=getPatient.getId();
                 });
             }
-
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
 
                 setGraphic(empty ? null : pane);
             }
-        });/*
-        //actionColumn.getColumns().addAll(deleteColumn,updateColumn);
-        deleteColumn.setCellValueFactory(new PropertyValueFactory<>("buttonDelete"));
-        updateColumn.setCellValueFactory(new PropertyValueFactory<>("buttonUpdate"));*/
+        });
         table.setItems(dishList2);
-    }
-    public static void sort(List<Dish> list) {
-
-        list.sort(Comparator.comparingInt(Dish::getId));
     }
     public void add(ActionEvent event) throws IOException {
         String invalid="";
         if(nameText.getText().equals("")){
-            invalid +=" Name is empty,";
+            invalid +=" Invalid Name ";
         }
-        if(moneyText.getText().equals("")||Double.parseDouble(moneyText.getText())<0){
-            invalid += " invalid Price,";
+        if(moneyText.getText().equals("")||moneyText.getText().chars().allMatch( Character::isAlphabetic )||Double.parseDouble(moneyText.getText())<0){
+            invalid += " Invalid Price,";
         }
-        if(caloText.getText().equals("")||Double.parseDouble(caloText.getText())<0){
-            invalid += " invalid Calo,";
+        if(caloText.getText().equals("")||caloText.getText().chars().allMatch( Character::isAlphabetic )||Double.parseDouble(caloText.getText())<0){
+            invalid += " Invalid Calo,";
         }
-        if(timeText.getText().equals("")||Double.parseDouble(timeText.getText())<0){
-            invalid += " invalid Time,";
+        if(timeText.getText().equals("")||timeText.getText().chars().allMatch( Character::isAlphabetic )||Double.parseDouble(timeText.getText())<0){
+            invalid += " Invalid Time,";
         }
         invalidLabel.setText(invalid);
         if(!invalid.equals("")){
+            invalid=invalid.substring(0,invalid.length()-1);
+            invalidLabel.setText(invalid);
             return;
         }
         Dish newDish = new Dish();
@@ -162,7 +135,6 @@ public class editController implements Initializable {
         newDish.setTotalCalo(Double.parseDouble(caloText.getText()));
         newDish.setTime(Double.parseDouble(timeText.getText()));
         newDish.setDescription(descriptionAText.getText());
-        //System.out.println(linkImage);
         linkImage=linkImage.replace("file:/","");
         linkImage=linkImage.replaceAll("/","\\\\");
         linkImage=linkImage.replaceAll("%20"," ");
@@ -170,14 +142,12 @@ public class editController implements Initializable {
         newDish.setLinkImgString(linkImage);
         newDish.setImgView(new ImageView(imageView.getImage()));
         newDish.setType(typeChoice.getValue());
-
         for(Dish ma:dishList2){
             if(ma.getNameDish().compareToIgnoreCase(newDish.getNameDish())==0&&flagADD==0){
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setGraphic(ma.getImgView());
-                alert.setTitle("Loi cu phap");
-                alert.setHeaderText("Ket qua:");
-                alert.setContentText("trung ten");
+                alert.setTitle("Error");
+                alert.setHeaderText("Result: New dish is "+newDish.getNameDish()+". This dish already exists!");
+                alert.setContentText("Cannot contain two dishes with the same name");
                 alert.showAndWait();
                 return;
             }
@@ -206,13 +176,11 @@ public class editController implements Initializable {
         else{
             dishList2.add(newDish);
         }
-        //sort(dishList2);
         String currentDirectory = System.getProperty("user.dir");
         imageView.setImage(new Image(currentDirectory.replaceAll("\\\\","\\\\")+"\\src\\main\\resources\\com\\example\\smartwaiter\\img\\Chef.png"));
         IO.writeFile(dishList2);
         btAdd.setText("Add");
         flagADD=0;
-
     }
     public void chooseFile(ActionEvent event){
         Stage stage = (Stage) bp.getScene().getWindow();
@@ -248,17 +216,3 @@ public class editController implements Initializable {
         stage.setScene(scene);
     }
 }
-/*    public void changeSceneDishDetail(ActionEvent event) throws IOException {
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("dish-view.fxml"));
-        Parent monAnViewParent = loader.load();
-        Scene scene = new Scene(monAnViewParent);
-
-        DishController detailController = loader.getController();
-        Dish selected = table.getSelectionModel().getSelectedItem();
-        detailController.setDish(selected);
-
-        stage.setScene(scene);
-    }*/

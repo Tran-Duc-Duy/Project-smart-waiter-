@@ -6,13 +6,6 @@ import com.example.smartwaiter.model.Meal;
 import com.example.smartwaiter.model.Order;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
@@ -61,8 +54,6 @@ public class IO {
 
     public static String copyImg(String path, String name) throws IOException {
         String currentDirectory = System.getProperty("user.dir");
-        //System.out.println(currentDirectory);
-        //String newPath="D:\\DuyStudy\\FILE_Ky2_LapTrinh\\SmarterWaiter\\src\\main\\resources\\com\\example\\smarterwaiter\\img\\"+name+".png";
         String newPath= currentDirectory.replaceAll("\\\\","\\\\")+"\\src\\main\\resources\\com\\example\\smartwaiter\\img\\"+name+".png";
 
         newPath=newPath.replaceAll("%20","-");
@@ -73,12 +64,9 @@ public class IO {
             outStream = new FileOutputStream(new File(newPath));
             int length;
             byte[] buffer = new byte[1024];
-
-            // copy the file content in bytes
             while ((length = inStream.read(buffer)) > 0) {
                 outStream.write(buffer, 0, length);
             }
-            //System.out.println("File is copied successful!");
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -121,7 +109,6 @@ public class IO {
                         i++;
                         continue;
                     }
-
                     String[] listOrderString = listString[a].split("@");
                     newListDish=new ArrayList<>();
                     for(int b=0;b<listOrderString.length;b++){

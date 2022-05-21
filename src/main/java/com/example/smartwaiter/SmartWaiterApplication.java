@@ -1,10 +1,7 @@
 package com.example.smartwaiter;
 
 import javafx.application.Application;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
@@ -28,15 +25,12 @@ public class SmartWaiterApplication extends Application {
     }
 
     public static void main(String[] args) {
-        /*Thread a =new Thread(() -> {
+        Thread a =new Thread(() -> {
             Sound_cdjv sound=new Sound_cdjv("D:\\DuyStudy\\FILE_Ky2_LapTrinh\\SmarterWaiter\\src\\main\\resources\\com\\example\\smarterwaiter\\audio.wav");
             sound.run();
         });
         a.setDaemon(true);
-        a.start();*/
+        a.start();
         launch();
-
-
-
     }
 }

@@ -273,12 +273,15 @@
                                         <Font name="Cambria Bold" size="18.0" />
                                     </font>
                                 </Label>
-                                <Label fx:id="adviceLabel" prefHeight="28.0" prefWidth="498.0" text="eat more">
+                                <Label fx:id="adviceLabel" prefHeight="28.0" prefWidth="498.0" text="You should eat well every day">
                                     <font>
                                         <Font name="Cambria Bold" size="18.0" />
                                     </font>
                                 </Label>
                             </children>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
                         </HBox>
                         <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="1510.0">
                             <children>

@@ -18,33 +18,6 @@ public class Dish {
     private ImageView imgView;
     private String linkImgString;
     private String description;
-    //private List<Button> buttons=new ArrayList<Button>();
-
-    /*public List<Button> getButtons() {
-        return buttons;
-    }
-
-    public void setButtons(List<Button> buttons) {
-        this.buttons = buttons;
-    }*/
-    /*private Button buttonDelete;
-    private Button buttonUpdate;
-
-    public Button getButtonDelete() {
-        return buttonDelete;
-    }
-
-    public void setButtonDelete(Button buttonDelete) {
-        this.buttonDelete = buttonDelete;
-    }
-
-    public Button getButtonUpdate() {
-        return buttonUpdate;
-    }
-
-    public void setButtonUpdate(Button buttonUpdate) {
-        buttonUpdate = buttonUpdate;
-    }*/
 
     public String getDescription() {
         return description;
@@ -64,11 +37,6 @@ public class Dish {
         this.imgView = new ImageView(new Image(linkImgString));
         this.linkImgString = linkImgString;
         this.description =description;
-        //this.bt=new Button("add");
-
-        /*this.buttonDelete=new Button("delete");
-
-        this.buttonUpdate=new Button("update");*/
     }
 
     public Dish() {
@@ -143,7 +111,6 @@ public class Dish {
     public void costumDescription2(){
         this.description=description.replaceAll("/n","\n");
     }
-
 
     @Override
     public String toString() {

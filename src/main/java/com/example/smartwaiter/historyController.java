@@ -1,10 +1,6 @@
 package com.example.smartwaiter;
 
-
-import com.example.smartwaiter.model.Dish;
 import com.example.smartwaiter.model.Meal;
-import com.example.smartwaiter.model.Order;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -102,18 +98,20 @@ public class historyController implements Initializable {
     }
     public void calculateBMR(){
         String invalid="";
-        if(ageField.getText().equals("")||Double.parseDouble(ageField.getText())<15 ||(Double.parseDouble(ageField.getText())>80)){
-            invalid += " invalid Age,";
+        if(ageField.getText().equals("")||ageField.getText().chars().allMatch( Character::isAlphabetic )||Double.parseDouble(ageField.getText())<15 ||(Double.parseDouble(ageField.getText())>80)){
+            invalid += " Invalid Age,";
         }
-        if(weightField.getText().equals("")||Double.parseDouble(weightField.getText())<0){
-            invalid += " invalid Weight,";
+        if(weightField.getText().equals("")||weightField.getText().chars().allMatch( Character::isAlphabetic )||Double.parseDouble(weightField.getText())<0){
+            invalid += " Invalid Weight,";
         }
-        if(heightField.getText().equals("")||Double.parseDouble(heightField.getText())<0){
-            invalid += " invalid Height,";
+        if(heightField.getText().equals("")||heightField.getText().chars().allMatch( Character::isAlphabetic )||Double.parseDouble(heightField.getText())<0){
+            invalid += " Invalid Height,";
         }
         //invalid=invalid.substring(0,invalid.length()-1);
         invalidLabel.setText(invalid);
         if(!invalid.equals("")){
+            invalid=invalid.substring(0,invalid.length()-1);
+            invalidLabel.setText(invalid);
             return;
         }
         double resultBMR=0;
