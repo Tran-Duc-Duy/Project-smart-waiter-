@@ -20,35 +20,23 @@ import java.net.URL;
 import java.util.*;
 
 public class historyController implements Initializable {
-    @FXML
-    private TableView<Meal> table;
+    //Declare for TableView
+    @FXML private TableView<Meal> table;
     @FXML private TableColumn<Meal, String> nameColumn;
     @FXML private TableColumn<Meal, Date> dateColumn;
     @FXML private TableColumn<Meal, Double> priceColumn;
     @FXML private TableColumn<Meal, Double> caloColumn;
     @FXML private TableColumn<Meal, Void> actionColumn;
-    private ObservableList<Meal> mealList;
-    @FXML
-    private ToggleButton button_1;
-    @FXML
-    private ToggleGroup gender;
-    @FXML
-    private ToggleButton button_2;
+
+
+    //Declare for BMR calculator
+    @FXML private ToggleButton button_1;
+    @FXML private ToggleGroup gender;
+    @FXML private ToggleButton button_2;
     @FXML private TextField ageField;
     @FXML private TextField weightField;
     @FXML private TextField heightField;
-    //...
     @FXML private ChoiceBox<String> typeChoice;
-    @FXML private Label invalidLabel;
-    @FXML private Label adviceLabel;
-
-    @FXML private TextField caloDfField;
-    @FXML private Label caloLastMonthLabel;
-    @FXML private Label caloThisMonthLabel;
-    static public double defaultCalo=0;
-    int checkGender=1;
-    Calendar cale = Calendar.getInstance();
-    private Date date = cale.getTime();
     private String[] activities = {
             "Do nothing, go nowhere",
             "Office work - study, not sports",
@@ -59,12 +47,30 @@ public class historyController implements Initializable {
             "Heavy work - heavy sports",
             "Super heavy work"
     };
+    @FXML private Label invalidLabel;
+    @FXML private Label adviceLabel;
+
+
+    @FXML private TextField caloDfField;
+    @FXML private Label caloLastMonthLabel;
+    @FXML private Label caloThisMonthLabel;
+
+
+    //General declaration
+    private ObservableList<Meal> mealList;
+    static public double defaultCalo=0;
+    private int checkGender=1;
+    private Calendar cale = Calendar.getInstance();
+    private Date date = cale.getTime();
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         mealList=IO.readFileMeal();
         caloLastMonthLabel.setText(String.valueOf(caloLastMonth()));
         caloThisMonthLabel.setText(String.valueOf(caloThisMonth()));
+
+
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
         caloColumn.setCellValueFactory(new PropertyValueFactory<>("calo"));
@@ -75,11 +81,10 @@ public class historyController implements Initializable {
 
             {
                 orderButton.setOnAction(event -> {
-                    /*Meal getPatient = getTableView().getItems().get(getIndex());
-
-                    .add(getPatient);*/
                     Meal getPatient = getTableView().getItems().get(getIndex());
                     mealList.remove(getPatient);
+                    caloLastMonthLabel.setText(String.valueOf(caloLastMonth()));
+                    caloThisMonthLabel.setText(String.valueOf(caloThisMonth()));
                     IO.writeFileMeal(mealList);
                 });
 
@@ -169,6 +174,7 @@ public class historyController implements Initializable {
         caloDfField.setText("");
     }
 
+    //handle toggleButton
     @FXML
     void toggleButton (ActionEvent event) {
         if (event.getSource() == button_1) {
@@ -183,6 +189,8 @@ public class historyController implements Initializable {
             checkGender=2;
         }
     }
+
+    //same as in homeController
     public void close(ActionEvent event) {
         Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
         stage.close();
@@ -200,7 +208,6 @@ public class historyController implements Initializable {
         Parent add = loader.load();
         Scene scene = new Scene(add);
         scene.setFill(Color.TRANSPARENT);
-
         stage.setScene(scene);
     }
 }

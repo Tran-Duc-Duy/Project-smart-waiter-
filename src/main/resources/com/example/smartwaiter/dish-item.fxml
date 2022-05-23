@@ -96,7 +96,7 @@
                 <Insets bottom="10.0" left="20.0" right="10.0" top="20.0" />
             </padding>
         </HBox>
-          <Label fx:id="descriptionLabel" alignment="TOP_LEFT" prefHeight="57.0" prefWidth="310.0" text="Description" textFill="#f2f2f2">
+          <Label fx:id="descriptionLabel" alignment="TOP_LEFT" prefHeight="57.0" prefWidth="310.0" textFill="#f2f2f2" textOverrun="WORD_ELLIPSIS">
               <font>
                   <Font name="Cambria Bold" size="18.0" />
               </font>

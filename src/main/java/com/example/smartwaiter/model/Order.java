@@ -5,11 +5,8 @@ import java.util.List;
 
 public class Order {
     private List<Dish> listDish=new ArrayList<>();;
-    private String myOrder=this.toString();
+    private String myOrder=this.toString(); // for display
     private double sum;
-    /*private double sumPrice = getSumPrice();
-    private double sumCalo= getSumCalo();
-    private double sumTime=getSumTime();*/
     public Order(List<Dish> listDish, int option) {
         this.listDish = listDish;
         if(option==1){
@@ -20,27 +17,6 @@ public class Order {
             sum=getSumTime();
         }
     }
-
-    /*public Order(Dish dish){
-        this.listOrder.add(dish);
-    }*/
-
-    public List<Dish> getListDish() {
-        return listDish;
-    }
-
-    public void setListDish(List<Dish> listDish) {
-        this.listDish = listDish;
-    }
-
-    public String getMyOrder() {
-        return this.toString();
-    }
-
-    public Double getSum() {
-        return sum;
-    }
-
     @Override
     public String toString() {
         String str="";
@@ -57,10 +33,22 @@ public class Order {
         }
         return str;
     }
+    public List<Dish> getListDish() {
+        return listDish;
+    }
+    public void setListDish(List<Dish> listDish) {
+        this.listDish = listDish;
+    }
+    public String getMyOrder() {
+        return this.toString();
+    }
+    public Double getSum() {
+        return sum;
+    }
     public double getSumPrice(){
         double sum =0.0;
         for(Dish ds:this.listDish){
-            sum+=ds.getTotalTien();
+            sum+=ds.getTotalPrice();
         }
         return sum;
     }

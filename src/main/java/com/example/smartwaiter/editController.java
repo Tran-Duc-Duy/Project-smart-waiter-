@@ -2,6 +2,8 @@ package com.example.smartwaiter;
 
 import com.example.smartwaiter.model.Dish;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,14 +24,13 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Comparator;
-import java.util.List;
 import java.util.ResourceBundle;
 
 import static com.example.smartwaiter.IO.readFile;
 
 
 public class editController implements Initializable {
+    //Declare for TableView
     @FXML private TableView<Dish> table;
     @FXML private TableColumn<Dish, Double> caloColumn;
     @FXML private TableColumn<Dish, Integer> idColumn;
@@ -38,9 +39,11 @@ public class editController implements Initializable {
     @FXML private TableColumn<Dish, String> nameColumn;
     @FXML private TableColumn<Dish, Double> timeColumn;
     @FXML private TableColumn<Dish, String> typeColumn;
-    @FXML private TableColumn<Dish, Void> actionColumn;
-    @FXML private ImageView imageView;
     @FXML private TableColumn<Dish, String> descriptionColumn;
+    @FXML private TableColumn<Dish, Void> actionColumn;
+
+    //Declare for add dish
+    @FXML private ImageView imageView;
     @FXML private TextField moneyText;
     @FXML private TextField caloText;
     @FXML private TextField timeText;
@@ -48,13 +51,20 @@ public class editController implements Initializable {
     @FXML private TextField nameText;
     @FXML private ChoiceBox<String> typeChoice;
     @FXML private Label invalidLabel;
-    @FXML private BorderPane bp;
     @FXML private Button btAdd;
     private String[] food ={"soup", "salad", "main course"};
+
+    //General declaration
+    @FXML private BorderPane bp;
     private ObservableList<Dish> dishList2;
     private String linkImage;
     private int flagADD=0;
+    private int flagChooseFile=0;
 
+    // Declare the search box
+    @FXML private TextField keywordTextField;
+
+    //initialize the content for the table
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         dishList2 = readFile();
@@ -71,8 +81,8 @@ public class editController implements Initializable {
         actionColumn.setCellFactory(param -> new TableCell<Dish, Void>() {
             private final Button editButton = new Button("edit");
             private final Button deleteButton = new Button("delete");
-            private final VBox pane = new VBox(deleteButton, editButton);
-
+            private final Button detailButton = new Button("detail");
+            private final VBox pane = new VBox(deleteButton, editButton,detailButton );
             {
                 deleteButton.setOnAction(event -> {
                     Dish getPatient = getTableView().getItems().get(getIndex());
@@ -87,7 +97,7 @@ public class editController implements Initializable {
                 editButton.setOnAction(event -> {
                     Dish getPatient = getTableView().getItems().get(getIndex());
                     nameText.setText(getPatient.getNameDish());
-                    moneyText.setText(String.valueOf(getPatient.getTotalTien()));
+                    moneyText.setText(String.valueOf(getPatient.getTotalPrice()));
                     caloText.setText(String.valueOf(getPatient.getTotalCalo()));
                     timeText.setText(String.valueOf(getPatient.getTime()));
                     btAdd.setText("Update");
@@ -96,6 +106,24 @@ public class editController implements Initializable {
                     typeChoice.setValue(getPatient.getType());
                     descriptionAText.setText(getPatient.getDescription());
                     flagADD=getPatient.getId();
+                    flagChooseFile=1;
+                });
+                detailButton.setOnAction(event -> {
+                    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                    FXMLLoader loader = new FXMLLoader();
+                    loader.setLocation(getClass().getResource("home-view-detail.fxml"));
+                    Parent add = null;
+                    try {
+                        add = loader.load();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    Scene scene = new Scene(add);
+                    DishDetailController detailController = loader.getController();
+                    Dish getPatient = getTableView().getItems().get(getIndex());
+                    detailController.setDish(getPatient);
+                    scene.setFill(Color.TRANSPARENT);
+                    stage.setScene(scene);
                 });
             }
             @Override
@@ -106,11 +134,45 @@ public class editController implements Initializable {
             }
         });
         table.setItems(dishList2);
+
+        // Initial filtered list
+        FilteredList<Dish> filteredData=new FilteredList<>(dishList2, b->true);
+        keywordTextField.textProperty().addListener((observable,oldValue,newValue)->{
+            filteredData.setPredicate(dish->{
+                // If no search value then display all records or whatever records it current have.no changes.
+                if(newValue.isEmpty()|| newValue.isBlank()|| newValue == null){
+                    return true;
+                }
+                String searchKeyword=newValue.toLowerCase();
+                if(dish.getNameDish().toLowerCase().contains(searchKeyword)){
+                    return true;// Means we found a match in Product Name
+                /*}else if(dish.getDescription().toLowerCase().indexOf(searchKeyword)>-1){
+                    return true;// Means we found  a match in Description
+                }else if(String.valueOf(dish.getTotalCalo()).indexOf(searchKeyword)>-1){
+                    return true;
+                }else if(dish.getType().indexOf(searchKeyword)>-1){
+                    return true;
+                }else if(String.valueOf(dish.getTotalTien()).indexOf(searchKeyword)>-1){
+                    return true;
+                }else if(String.valueOf(dish.getTime()).indexOf(searchKeyword)>-1){
+                    return true;*/
+                }else
+                return false;// no match found
+            });
+        });
+        SortedList<Dish> sortedData=new SortedList<>(filteredData);
+        // Bind sorted result with Table View
+        sortedData.comparatorProperty().bind(table.comparatorProperty());
+        // Apply filtered and sorted data to the Table View
+        table.setItems(sortedData);
     }
+
+    //handle add button
     public void add(ActionEvent event) throws IOException {
+        //check valid
         String invalid="";
         if(nameText.getText().equals("")){
-            invalid +=" Invalid Name ";
+            invalid +=" Invalid Name,";
         }
         if(moneyText.getText().equals("")||moneyText.getText().chars().allMatch( Character::isAlphabetic )||Double.parseDouble(moneyText.getText())<0){
             invalid += " Invalid Price,";
@@ -121,17 +183,22 @@ public class editController implements Initializable {
         if(timeText.getText().equals("")||timeText.getText().chars().allMatch( Character::isAlphabetic )||Double.parseDouble(timeText.getText())<0){
             invalid += " Invalid Time,";
         }
+        if(flagChooseFile==0){
+            invalid += " Pls choose image,";
+        }
         invalidLabel.setText(invalid);
         if(!invalid.equals("")){
             invalid=invalid.substring(0,invalid.length()-1);
             invalidLabel.setText(invalid);
             return;
         }
+
+        //initialize a dish
         Dish newDish = new Dish();
         newDish.setId(dishList2.size()+1);
 
         newDish.setNameDish(nameText.getText());
-        newDish.setTotalTien(Double.parseDouble(moneyText.getText()));
+        newDish.setTotalPrice(Double.parseDouble(moneyText.getText()));
         newDish.setTotalCalo(Double.parseDouble(caloText.getText()));
         newDish.setTime(Double.parseDouble(timeText.getText()));
         newDish.setDescription(descriptionAText.getText());
@@ -152,11 +219,7 @@ public class editController implements Initializable {
                 return;
             }
         }
-        nameText.setText("");
-        moneyText.setText("");
-        caloText.setText("");
-        timeText.setText("");
-        descriptionAText.setText("");
+        //used when mode is "update"
         if(flagADD!=0){
             newDish.setId(flagADD);
             for(Dish dis:dishList2){
@@ -166,36 +229,39 @@ public class editController implements Initializable {
                     dis.setDescription(newDish.getDescription());
                     dis.setTime(newDish.getTime());
                     dis.setTotalCalo(newDish.getTotalCalo());
-                    dis.setTotalTien(newDish.getTotalTien());
+                    dis.setTotalPrice(newDish.getTotalPrice());
                     dis.setLinkImgString(newDish.getLinkImgString());
                     dis.setImgView(newDish.getImgView());
                 }
             }
-            changeScene(event,"home-view-add.fxml");
         }
         else{
             dishList2.add(newDish);
         }
-        String currentDirectory = System.getProperty("user.dir");
-        imageView.setImage(new Image(currentDirectory.replaceAll("\\\\","\\\\")+"\\src\\main\\resources\\com\\example\\smartwaiter\\img\\Chef.png"));
+
         IO.writeFile(dishList2);
-        btAdd.setText("Add");
         flagADD=0;
+        flagChooseFile=0;
+        changeScene(event,"home-view-add.fxml");
     }
     public void chooseFile(ActionEvent event){
         Stage stage = (Stage) bp.getScene().getWindow();
+        //create a variable to select the file
         FileChooser fc =new FileChooser();
         fc.setTitle("Choose a image");
+        //only accept files with the extension:"*.jpg","*.png"
         FileChooser.ExtensionFilter imageFilter = new FileChooser.ExtensionFilter("Image Files","*.jpg","*.png");
         fc.getExtensionFilters().add(imageFilter);
         File file = fc.showOpenDialog(stage);
         if(file !=null){
             linkImage=file.toURI().toString();
-            String myLinkImage=file.toURI().toString();
-            Image image =new Image(myLinkImage,200,200,true,true);
+            Image image =new Image(linkImage,200,200,true,true);
             imageView.setImage(image);
+            flagChooseFile=1;
         }
     }
+
+    //same as in homeController
     public void close(ActionEvent event) {
         Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
         stage.close();

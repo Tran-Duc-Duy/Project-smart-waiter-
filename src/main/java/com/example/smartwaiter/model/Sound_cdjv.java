@@ -1,4 +1,4 @@
-package com.example.smartwaiter;
+package com.example.smartwaiter.model;
 
 import javax.sound.sampled.*;
 import java.io.File;

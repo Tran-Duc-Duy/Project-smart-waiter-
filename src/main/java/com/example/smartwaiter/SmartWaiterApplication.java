@@ -1,5 +1,6 @@
 package com.example.smartwaiter;
 
+import com.example.smartwaiter.model.Sound_cdjv;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -14,23 +15,31 @@ import java.util.Objects;
 public class SmartWaiterApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
+        //declare FXML
         FXMLLoader fxmlLoader = new FXMLLoader(SmartWaiterApplication.class.getResource("home-view.fxml"));
+        //setting stage
         stage.setTitle("Smart Waiter!");
         stage.initStyle(StageStyle.TRANSPARENT);
+        //declare and setting scene
         Scene scene = new Scene(fxmlLoader.load());
         scene.setFill(Color.TRANSPARENT);
+        //setting stage
         stage.getIcons().add(new Image(Objects.requireNonNull(SmartWaiterApplication.class.getResourceAsStream("img/Chef.png"))));
         stage.setScene(scene);
         stage.show();
     }
 
     public static void main(String[] args) {
-        Thread a =new Thread(() -> {
-            Sound_cdjv sound=new Sound_cdjv("D:\\DuyStudy\\FILE_Ky2_LapTrinh\\SmarterWaiter\\src\\main\\resources\\com\\example\\smarterwaiter\\audio.wav");
+        //thread for start music
+        Thread music =new Thread(() -> {
+            String currentDirectory = System.getProperty("user.dir");
+            String newPath= currentDirectory.replaceAll("\\\\","\\\\");
+            Sound_cdjv sound=new Sound_cdjv(newPath+"\\audio.wav");
             sound.run();
         });
-        a.setDaemon(true);
-        a.start();
+        music.setDaemon(true);
+        music.start();
+        //run app
         launch();
     }
 }

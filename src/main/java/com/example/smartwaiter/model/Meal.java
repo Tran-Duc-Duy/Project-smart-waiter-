@@ -24,9 +24,18 @@ public class Meal {
         this.calo = calo;
         this.name = this.toString();
     }
+    @Override
+    public String toString() {
 
-
-
+        String str = formatter1.format(date)+ "#";
+        for (Order order : listOrder) {
+            for(Dish item : order.getListDish()){
+                str += item.toString() + "@";
+            }
+            str+= "#";
+        }
+        return str;
+    }
     public String getName() {
         String name="";
         for(Order o : listOrder){
@@ -34,7 +43,6 @@ public class Meal {
         }
         return name;
     }
-
     public List<Order> getListOrder() {
         return listOrder;
     }
@@ -58,7 +66,7 @@ public class Meal {
         double a=0;
         for(Order o : listOrder){
             for(Dish d:o.getListDish()){
-                a+=d.getTotalTien();
+                a+=d.getTotalPrice();
             }
         }
         return a;
@@ -82,16 +90,5 @@ public class Meal {
         this.calo = calo;
     }
 
-    @Override
-    public String toString() {
 
-        String str = formatter1.format(date)+ "#";
-        for (Order order : listOrder) {
-            for(Dish item : order.getListDish()){
-                str += item.toString() + "@";
-            }
-            str+= "#";
-        }
-        return str;
-    }
 }

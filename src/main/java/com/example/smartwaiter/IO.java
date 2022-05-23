@@ -53,6 +53,7 @@ public class IO {
     }
 
     public static String copyImg(String path, String name) throws IOException {
+        //get the path of a file and save the file in the img directory
         String currentDirectory = System.getProperty("user.dir");
         String newPath= currentDirectory.replaceAll("\\\\","\\\\")+"\\src\\main\\resources\\com\\example\\smartwaiter\\img\\"+name+".png";
 
@@ -76,6 +77,8 @@ public class IO {
         return newPath;
     }
 
+
+    //write the default calorie value first then the meals
     public static void writeFileMeal(ObservableList<Meal> mealList) {
         try {
             FileWriter fw = new FileWriter("testHistory.txt");
@@ -88,6 +91,8 @@ public class IO {
             System.out.println(e);
         }
     }
+
+    //Read meals out from file
     public static ObservableList<Meal> readFileMeal(){
         List<Meal> list = new ArrayList<>();
         List<Dish> newListDish=new ArrayList<>();
